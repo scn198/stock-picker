@@ -1,0 +1,23 @@
+# GitHub Actions 专用依赖清单
+#
+# 与 requirements.txt 的差异只有一处：去掉 mootdx 那一行。
+# 原因：mootdx 0.11.7 声明 httpx<0.26，而 asharehub 要求 httpx>=0.27，
+# 两者在同一个 pip resolve 里无解（pip 会一路回溯到 mootdx 0.10.x，
+# 再撞上 pandas>=2.0 的要求，最终 ResolutionImpossible）。
+# workflow 里改为：
+#   pip install -r requirements-ci.txt
+#   pip install --no-deps "mootdx==0.11.7"
+#   pip install tdxpy prettytable py-mini-racer tenacity click tqdm
+# 其余版本约束与 requirements.txt 保持一致。
+
+requests>=2.28.0,<3.0
+pandas>=2.0.0,<4.0
+numpy>=1.24.0,<3.0
+scikit-learn>=1.2.0,<2.0
+akshare>=1.14.0,<2.0
+cachetools>=5.3.0,<8.0
+pyyaml>=6.0,<7.0
+asharehub>=0.6.0,<1.0
+scipy>=1.10.0,<2.0
+baostock>=0.8.8,<1.0
+matplotlib>=3.7,<4.0
